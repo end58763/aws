@@ -2,6 +2,11 @@
 # This script still requires user to be created on the hostname, please replace or provide ${username} 
 # This script was used on AWS EC2 instances, to ensure fairly smooth experience it requires 4GB RAM so choose t2/3.medium or equivalent or assign 4GB per node if using locally with i.e VirtualBox
 
+#### ONLY FOR INTERNSHIP
+echo "THIS IS OUR MASTER INSTANCE - ENDAVA Argentina INTERNSHIP 2021" > index.html
+nohup busybox httpd -f -p 8080 &
+####
+
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl tree
 
@@ -22,7 +27,6 @@ sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo usermod -a -G docker ubuntu
 sudo systemctl enable docker
-sudo chmod 666 /var/run/docker.sock
 
 #K8S
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
