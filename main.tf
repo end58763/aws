@@ -15,6 +15,9 @@ shared_credentials_file = "~/.aws/credentials"
 resource "aws_instance" "master" {
   ami = "ami-0885b1f6bd170450c"
   instance_type = "t2.micro" 
+  tags = {
+      Name = "${var.prefix}-master-01"
+    }
   key_name = var.key
   vpc_security_group_ids = [ aws_security_group.websg.id ]
   /*
@@ -25,14 +28,14 @@ resource "aws_instance" "master" {
                 EOF
   */
   user_data = file("./scripts/ubuntu-pre-reqs.sh")
-    tags = {
-      name = "${var.prefix}-master-01"
-    }
 }
 // WORKER VMs
 resource "aws_instance" "worker" {
   ami = "ami-0885b1f6bd170450c"
   instance_type = "t2.micro"
+  tags = {
+      Name = "${var.prefix}-worker-01"
+    }
   key_name = var.key
   vpc_security_group_ids = [ aws_security_group.websg.id ]
   /*
@@ -43,9 +46,6 @@ resource "aws_instance" "worker" {
                 EOF
   */
   user_data = file("./scripts/ubuntu-pre-reqs.sh")
-    tags = {
-      name = "${var.prefix}-worker-01"
-    }
 }
 resource "aws_security_group" "websg" {
   name = "web-sg01"

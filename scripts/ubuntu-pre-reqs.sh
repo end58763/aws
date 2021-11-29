@@ -3,7 +3,7 @@
 # This script was used on AWS EC2 instances, to ensure fairly smooth experience it requires 4GB RAM so choose t2/3.medium or equivalent or assign 4GB per node if using locally with i.e VirtualBox
 
 #### ONLY FOR INTERNSHIP
-echo "THIS IS OUR MASTER INSTANCE - ENDAVA Argentina INTERNSHIP 2021" > index.html
+echo "THIS IS OUR INSTANCE FOR ENDAVA Argentina INTERNSHIP 2021" > index.html
 nohup busybox httpd -f -p 8080 &
 ####
 
