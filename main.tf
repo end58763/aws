@@ -20,13 +20,6 @@ resource "aws_instance" "master" {
     }
   key_name = var.key
   vpc_security_group_ids = [ aws_security_group.websg.id ]
-  /*
-  user_data = <<-EOF
-                #!/bin/bash
-                echo "THIS IS OUR MASTER INSTANCE - ENDAVA Argentina INTERNSHIP 2021" > index.html
-                nohup busybox httpd -f -p 8080 &
-                EOF
-  */
   user_data = file("./scripts/ubuntu-pre-reqs.sh")
 }
 // WORKER VMs
@@ -38,13 +31,6 @@ resource "aws_instance" "worker" {
     }
   key_name = var.key
   vpc_security_group_ids = [ aws_security_group.websg.id ]
-  /*
-  user_data = <<-EOF
-                #!/bin/bash
-                echo "THIS IS OUR WORKER NODE - ENDAVA Argentina INTERNSHIP 2021" > index.html
-                nohup busybox httpd -f -p 8080 &
-                EOF
-  */
   user_data = file("./scripts/ubuntu-pre-reqs.sh")
 }
 resource "aws_security_group" "websg" {
@@ -60,6 +46,13 @@ resource "aws_security_group" "websg" {
     protocol = "tcp"
     from_port = 22
     to_port = 22
+    cidr_blocks = [ "0.0.0.0/0" ]
+  }
+  //For Wetty HTTP/HTTPS
+  ingress {
+    protocol = "tcp"
+    from_port = 3000
+    to_port = 3000
     cidr_blocks = [ "0.0.0.0/0" ]
   }
   // Outbound Rules 
